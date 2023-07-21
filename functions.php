@@ -72,4 +72,5 @@ function merge_subscription ($input){
     $shadowsocks .= isset($processed_array['ss']) ? implode("\n", $processed_array['ss']) . "\n": null;
   }
   $output = $vmess . $vless . $trojan . $shadowsocks;
+    return $output;
 }
