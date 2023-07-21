@@ -1,7 +1,7 @@
 <?php
 
-require "config.php";
-require "functions.php";
+include "config.php";
+include "functions.php";
 
 $merged_data = merge_subscription($subscription_urls);
 
