@@ -1,17 +1,5 @@
 <?php
 
-function openLink($url)
-{
-    $ch = curl_init();
-    curl_setopt_array($ch, [
-        CURLOPT_URL => $url,
-        CURLOPT_RETURNTRANSFER => 1,
-        CURLOPT_USERAGENT => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36",
-        CURLOPT_FOLLOWLOCATION => true,
-    ]);
-    return curl_exec($ch);
-}
-
 function detect_type($input)
 {
     $type = "";
@@ -34,6 +22,7 @@ function is_base64_encoded ($input_string) {
 }
 
 function process_subscriptions_helper ($input) {
+    $output = [];
     $data_array = explode("\n", $input);
     foreach ($data_array as $config){
       $type = detect_type($config);
@@ -57,7 +46,7 @@ function process_subscriptions_helper ($input) {
 
 function process_subscriptions ($input) {
   $output = [];
-  if (is_base64_encoded($input)){
+  if (is_base64_encoded($input) === true){
     $data = base64_decode($input);
     $output = process_subscriptions_helper($data);
   } else {
@@ -66,18 +55,18 @@ function process_subscriptions ($input) {
   return $output;
 }
 
-function merge_subscription ($subscription_array){
+function merge_subscription ($input){
   $vmess = "";
   $vless = "";
   $trojan = "";
   $shadowsocks = "";
-  foreach ($subscription_array as $subscription_url){
-    $subscription_data = openLink($subscription_url);
+  foreach ($input as $subscription_url){
+    $subscription_data = file_get_contents($subscription_url);
     $processed_array = process_subscriptions($subscription_data);
-    $vmess .= implode("\n", $processed_array['vmess']) . "\n";
-    $vless .= implode("\n", $processed_array['vless']) . "\n";
-    $trojan .= implode("\n", $processed_array['trojan']) . "\n";
-    $shadowsocks .= implode("\n", $processed_array['ss']) . "\n";
+    $vmess .= isset($processed_array['vmess']) ? implode("\n", $processed_array['vmess']) . "\n" : null;
+    $vless .= isset($processed_array['vless']) ? implode("\n", $processed_array['vless']) . "\n" : null;
+    $trojan .= isset($processed_array['trojan']) ? implode("\n", $processed_array['trojan']) . "\n" : null;
+    $shadowsocks .= isset($processed_array['ss']) ? implode("\n", $processed_array['ss']) . "\n": null;
   }
   $output = $vmess . $vless . $trojan . $shadowsocks;
 }
