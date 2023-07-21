@@ -2,7 +2,8 @@
 
 $subscription_urls = [
   "https://alienvpn402.github.io/AlienVPN402-subscribe-servers/",
-  "http://176.124.198.154/subscribe.txt",
-  "http://5.230.67.53/subscribe.txt",
+  "https://branch.blanku.me/",
+  "https://raw.githubusercontent.com/irancpi/Subscription/main/Sub",
+  "https://raw.githubusercontent.com/amirmohammad-mohammad-88/Sub-Reality-Azadi-config/Config/Azadi-Reality-Different",
   
 ];
