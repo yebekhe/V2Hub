@@ -49,7 +49,7 @@ function process_subscriptions_helper ($input) {
 
 function process_subscriptions ($input) {
   $output = [];
-  if (is_base64_encoded($input) === true){
+  if (is_base64_encoded($input) === "true"){
     $data = base64_decode($input);
     $output = process_subscriptions_helper($data);
   } else {
