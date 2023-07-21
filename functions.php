@@ -16,9 +16,12 @@ function detect_type($input)
     return $type;
 }
 
-function is_base64_encoded ($input_string) {
-    $decoded_string = base64_decode($input_string, true);
-    return ($decoded_string !== false);
+function is_base64_encoded($string){
+if ( base64_encode(base64_decode($string, true)) === $string){
+    return "true";
+} else {
+    return "false";
+}
 }
 
 function process_subscriptions_helper ($input) {
