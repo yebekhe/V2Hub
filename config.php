@@ -1,4 +1,4 @@
-<?
+<?php
 
 $subscription_urls = [
   "https://alienvpn402.github.io/AlienVPN402-subscribe-servers/",
