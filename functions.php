@@ -289,8 +289,10 @@ function remove_duplicate_ss($input)
 
 function is_ip($string)
 {
-    $ip_pattern = '/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/';
-    if (preg_match($ip_pattern, $string)) {
+    $ipv4_pattern = '/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/';
+    $ipv6_pattern = '/^[0-9a-fA-F:]+$/'; // matches any valid IPv6 address
+
+    if (preg_match($ipv4_pattern, $string) || preg_match($ipv6_pattern, $string)) {
         return true;
     } else {
         return false;
@@ -299,11 +301,12 @@ function is_ip($string)
 
 function ip_info($ip)
 {
-    if (filter_var("https://" . $ip, FILTER_VALIDATE_URL) !== false) {
+    if (is_ip($ip)) === false) {
         $ip_address_array = dns_get_record($ip, DNS_A);
-        $randomKey = array_rand($ip_address_array);
-        $ip = $ip_address_array[$randomKey]["ip"];
-    }
+        if (is_array($ip_address_array)) {
+            $randomKey = array_rand($ip_address_array);
+            $ip = $ip_address_array[$randomKey]["ip"];
+        }
     $ipinfo = json_decode(
         file_get_contents("https://api.country.is/" . $ip),
         true
@@ -438,7 +441,7 @@ function generate_name($flag, $ip, $port, $ping)
 {
     $is_reality = stripos($config, "reality") !== false ? true : false;
     $country_code =
-        getCountryCode($flag) !== flase ? getCountryCode($flag) : "RELAY";
+        getCountryCode($flag) !== false ? getCountryCode($flag) : "RELAY";
     $name = "";
     switch ($is_reality) {
         case true:
