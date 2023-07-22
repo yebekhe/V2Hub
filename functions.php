@@ -551,6 +551,7 @@ function process_subscriptions_helper($input)
 
 function merge_subscription($input)
 {
+    $output = [];
     $vmess = "";
     $vless = "";
     $trojan = "";
@@ -558,42 +559,22 @@ function merge_subscription($input)
     foreach ($input as $subscription_url) {
         $subscription_data = file_get_contents($subscription_url);
         $processed_array = process_subscriptions($subscription_data);
-        $vmess .= isset($processed_array["vmess"])
-            ? implode("\n", $processed_array["vmess"]) . "\n"
-            : null;
-        $vless .= isset($processed_array["vless"])
-            ? implode("\n", $processed_array["vless"]) . "\n"
-            : null;
-        $trojan .= isset($processed_array["trojan"])
-            ? implode("\n", $processed_array["trojan"]) . "\n"
-            : null;
-        $shadowsocks .= isset($processed_array["ss"])
-            ? implode("\n", $processed_array["ss"]) . "\n"
-            : null;
+        $output["vmess"] = isset($processed_array["vmess"])
+            ? array_merge($output["vmess"], $processed_array["vmess"])
+            : $output["vmess"];
+        $output["vless"] = isset($processed_array["vless"])
+            ? array_merge($output["vless"], $processed_array["vless"]) 
+            : $output["vmess"];
+        $output["trojan"] = isset($processed_array["trojan"])
+            ? array_merge($output["trojan"], $processed_array["trojan"])
+            : $output["vmess"];
+        $output["ss"] = isset($processed_array["ss"])
+            ? array_merge($output["ss"], $processed_array["ss"])
+            : $output["ss"];
     }
-    $output = $vmess . $vless . $trojan . $shadowsocks;
     return $output;
 }
 
 function array_to_subscription($input) {
     return implode("\n", $input);
-}
-
-function split_by_protocol($input){
-    $output = [];
-    $configs_array = explode("\n", $input);
-    foreach ($configs_array as $config) {
-        $type = detect_type($config);
-            switch ($type){
-                case "vmess" :
-                    $output['vmess'][] = $config;
-                case "vmess" :
-                    $output['vless'][] = $config;
-                case "vmess" :
-                    $output['trojan'][] = $config;
-                case "vmess" :
-                    $output['ss'][] = $config;
-            }
-    }
-    return $output;
 }
