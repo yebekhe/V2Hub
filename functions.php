@@ -572,10 +572,10 @@ function merge_subscription($input)
             ? implode("\n", $processed_array["ss"]) . "\n"
             : null;
     }
-    $output['vmess'] = explode($vmess);
-    $output['vless'] = explode($vless);
-    $output['trojan'] = explode($trojan);
-    $output['ss'] = explode($shadowsocks);
+    $output['vmess'] = explode("\n", $vmess);
+    $output['vless'] = explode("\n", $vless);
+    $output['trojan'] = explode("\n", $trojan);
+    $output['ss'] = explode("\n", $shadowsocks);
     return $output;
 }
 
