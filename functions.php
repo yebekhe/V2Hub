@@ -559,19 +559,23 @@ function merge_subscription($input)
     foreach ($input as $subscription_url) {
         $subscription_data = file_get_contents($subscription_url);
         $processed_array = process_subscriptions($subscription_data);
-        $output["vmess"] = isset($processed_array["vmess"])
-            ? array_merge($output["vmess"], $processed_array["vmess"])
-            : $output["vmess"];
-        $output["vless"] = isset($processed_array["vless"])
-            ? array_merge($output["vless"], $processed_array["vless"]) 
-            : $output["vmess"];
-        $output["trojan"] = isset($processed_array["trojan"])
-            ? array_merge($output["trojan"], $processed_array["trojan"])
-            : $output["vmess"];
-        $output["ss"] = isset($processed_array["ss"])
-            ? array_merge($output["ss"], $processed_array["ss"])
-            : $output["ss"];
+        $vmess .= isset($processed_array["vmess"])
+            ? implode("\n", $processed_array["vmess"]) . "\n"
+            : null;
+        $vless .= isset($processed_array["vless"])
+            ? implode("\n", $processed_array["vless"]) . "\n"
+            : null;
+        $trojan .= isset($processed_array["trojan"])
+            ? implode("\n", $processed_array["trojan"]) . "\n"
+            : null;
+        $shadowsocks .= isset($processed_array["ss"])
+            ? implode("\n", $processed_array["ss"]) . "\n"
+            : null;
     }
+    $output['vmess'] = explode($vmess);
+    $output['vless'] = explode($vless);
+    $output['trojan'] = explode($trojan);
+    $output['ss'] = explode($shadowsocks);
     return $output;
 }
 
