@@ -575,6 +575,10 @@ function merge_subscription($input)
     return $output;
 }
 
+function array_to_subscription($input) {
+    return implode("\n", $input);
+}
+
 function split_by_protocol($input){
     $output = [];
     $configs_array = explode("\n", $input);
