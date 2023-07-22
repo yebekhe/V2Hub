@@ -5,7 +5,7 @@ include "functions.php";
 
 $merged_data = merge_subscription($subscription_urls);
 $merged_vmess = array_to_subscription($merged_data['vmess']);
-$merged_vless = array_to_subscription($merged_data['vless'])";
+$merged_vless = array_to_subscription($merged_data['vless']);
 $merged_reality = get_reality($merged_vless);
 $merged_trojan = array_to_subscription($merged_data['trojan']);
 $merged_shadowsocks = array_to_subscription($merged_data['ss']);
