@@ -118,10 +118,10 @@
     </blockquote>
   </li>
 </ul>
-<p>For Example: (OutputFormat) = clash (SubUrl) = <a href="https://raw.githubusercontent.com/yebekhe/V2Hub/main/merged_base64">https://raw.githubusercontent.com/yebekhe/V2Hub/main/sub/mix_base64</a>
+<p>For Example: (OutputFormat) = clash (SubUrl) = <a href="https://raw.githubusercontent.com/yebekhe/V2Hub/main/merged_base64">https://raw.githubusercontent.com/yebekhe/V2Hub/main/merged_base64</a>
 </p>
 <p>
-  <a href="https://pub-api-1.bianyuan.xyz/sub?target=clash&amp;url=https://raw.githubusercontent.com/yebekhe/V2Hub/main/merged_base64&amp;insert=false">https://pub-api-1.bianyuan.xyz/sub?target=clash&amp;url=https://raw.githubusercontent.com/yebekhe/V2Hub/main/sub/mix_base64&amp;insert=false</a>
+  <a href="https://pub-api-1.bianyuan.xyz/sub?target=clash&url=https://raw.githubusercontent.com/yebekhe/V2Hub/main/merged_base64&insert=false">https://pub-api-1.bianyuan.xyz/sub?target=clash&url=https://raw.githubusercontent.com/yebekhe/V2Hub/main/merged_base64&insert=false</a>
 </p>
 <p>Now you can use the link above to import the subs into your client ```</p>
 <h2 id="license">License</h2>
