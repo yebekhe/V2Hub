@@ -574,3 +574,26 @@ function merge_subscription($input)
     $output = $vmess . $vless . $trojan . $shadowsocks;
     return $output;
 }
+
+function split_by_protocol($input){
+    $output = [];
+    $configs_array = explode("\n", $input);
+    foreach ($configs_array as $config) {
+        $type = detect_type($config)
+            switch ($type){
+                case "vmess" :
+                    $output['vmess'][] = $config;
+                    break;
+                case "vmess" :
+                    $output['vless'][] = $config;
+                    break;
+                case "vmess" :
+                    $output['trojan'][] = $config;
+                    break;
+                case "vmess" :
+                    $output['ss'][] = $config;
+                    break;
+            }
+    }
+    return $output;
+}
