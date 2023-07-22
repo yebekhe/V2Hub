@@ -438,9 +438,8 @@ function ping($ip, $port)
     }
 }
 
-function generate_name($flag, $ip, $port, $ping)
+function generate_name($flag, $ip, $port, $ping, $is_reality)
 {
-    $is_reality = stripos($config, "reality") !== false ? true : false;
     $country_code =
         getCountryCode($flag) !== false ? getCountryCode($flag) : "RELAY";
     $name = "";
@@ -483,6 +482,7 @@ function process_config($config)
         "ss" => "remarks",
     ];
     $type = detect_type($config);
+    $is_reality = stripos($config, "reality") !== false ? true : false;
     $parsed_config = parse_config($config);
     $ip = get_ip($parsed_config, $type);
     $port = get_port($parsed_config, $type);
@@ -494,7 +494,8 @@ function process_config($config)
             $flag,
             $ip,
             $port,
-            $ping_data
+            $ping_data,
+            $is_reality
         );
         $final_config = build_config($parsed_config, $type);
         return $final_config;
