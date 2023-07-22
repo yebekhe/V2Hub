@@ -544,19 +544,19 @@ function process_subscriptions_helper($input)
     foreach ($data_array as $config) {
         $processed_config = process_config($config);
         if ($processed_config !== false) {
-            $type = detect_type($config);
+            $type = detect_type($processed_config);
             switch ($type) {
                 case "vmess":
-                    $output["vmess"][] = $config;
+                    $output["vmess"][] = $processed_config;
                     break;
                 case "vless":
-                    $output["vless"][] = $config;
+                    $output["vless"][] = $processed_config;
                     break;
                 case "trojan":
-                    $output["trojan"][] = $config;
+                    $output["trojan"][] = $processed_config;
                     break;
                 case "ss":
-                    $output["ss"][] = $config;
+                    $output["ss"][] = $processed_config;
                     break;
             }
         }
