@@ -321,9 +321,9 @@ function get_flag($ip)
     $ip_info = ip_info($ip);
     if (isset($ip_info["country"])) {
         $location = $ip_info["country"];
-        $flag = getFlags($location);
+        $flag = $location . getFlags($location);
     } else {
-        $flag = "🚩";
+        $flag = "RELAY🚩";
     }
     return $flag;
 }
@@ -343,17 +343,6 @@ function getFlags($country_code)
     return $flag;
 }
 
-function getCountryCode($flag)
-{
-    if (!preg_match('/^&#\d{1,};&#\d{1,};$/', $flag)) {
-        return false;
-    }
-
-    $flag = str_replace(["&#", ";"], "", $flag);
-    $code1 = chr(intval($flag) - 127397);
-    $code2 = chr(intval(substr($flag, -5)) - 127397);
-    return $code1 . $code2;
-}
 
 function get_ip($config, $type, $is_reality)
 {
@@ -439,14 +428,11 @@ function ping($ip, $port)
 
 function generate_name($flag, $ip, $port, $ping, $is_reality)
 {
-    $country_code =
-        getCountryCode($flag) !== false ? getCountryCode($flag) : "RELAY";
     $name = "";
     switch ($is_reality) {
         case true:
             $name =
                 "REALITY|" .
-                $country_code .
                 $flag .
                 " | " .
                 $ip .
@@ -458,7 +444,6 @@ function generate_name($flag, $ip, $port, $ping, $is_reality)
             break;
         case false:
             $name =
-                $country_code .
                 $flag .
                 " | " .
                 $ip .
