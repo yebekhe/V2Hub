@@ -355,13 +355,12 @@ function getCountryCode($flag)
     return $code1 . $code2;
 }
 
-function get_ip($config, $type)
+function get_ip($config, $type, $is_reality)
 {
     switch ($type) {
         case "vmess":
             return get_vmess_ip($config);
         case "vless":
-            $is_reality = stripos($config, "reality") !== false ? true : false;
             return get_vless_ip($config, $is_reality);
         case "trojan":
             return get_trojan_ip($config);
@@ -484,7 +483,7 @@ function process_config($config)
     $type = detect_type($config);
     $is_reality = stripos($config, "reality") !== false ? true : false;
     $parsed_config = parse_config($config);
-    $ip = get_ip($parsed_config, $type);
+    $ip = get_ip($parsed_config, $type, $is_reality);
     $port = get_port($parsed_config, $type);
     $ping_data = ping($ip, $port);
     if ($ping_data !== "unavailable") {
