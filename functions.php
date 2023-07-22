@@ -301,7 +301,7 @@ function is_ip($string)
 
 function ip_info($ip)
 {
-    if (is_ip($ip)) === false) {
+    if (is_ip($ip) === false) {
         $ip_address_array = dns_get_record($ip, DNS_A);
         if (is_array($ip_address_array)) {
             $randomKey = array_rand($ip_address_array);
