@@ -22,14 +22,14 @@ function parse_config($input)
     $parsed_config = [];
     switch ($type) {
         case "vmess":
-            $parsed_config = decode_vmess($input) ;
+            $parsed_config = decode_vmess($input);
             break;
         case "vless":
         case "trojan":
-            $parsed_config = parseProxyUrl($input, $type) ;
+            $parsed_config = parseProxyUrl($input, $type);
             break;
         case "ss":
-            $parsed_config = ParseShadowsocks($input) ;
+            $parsed_config = ParseShadowsocks($input);
             break;
     }
     return $parsed_config;
@@ -76,7 +76,7 @@ function remove_duplicate_vmess($input)
     $result = [];
     foreach ($array as $item) {
         $parts = decode_vmess($item);
-        if ($parts !== NULL) {
+        if ($parts !== null) {
             $part_ps = $parts["ps"];
             unset($parts["ps"]);
             if (count($parts) >= 3) {
@@ -117,7 +117,7 @@ function parseProxyUrl($url, $type = "trojan")
         "protocol" => $type,
         "username" => isset($parsedUrl["user"]) ? $parsedUrl["user"] : "",
         "hostname" => isset($parsedUrl["host"]) ? $parsedUrl["host"] : "",
-        "port" => isset($parsedUrl["port"]) ? $parsedUrl["port"]: "",
+        "port" => isset($parsedUrl["port"]) ? $parsedUrl["port"] : "",
         "params" => $params,
         "hash" => isset($parsedUrl["fragment"]) ? $parsedUrl["fragment"] : "",
     ];
@@ -326,8 +326,16 @@ function get_flag($ip)
 
 function getFlags($country_code)
 {
-    $flag = mb_convert_encoding( '&#' . ( 127397 + ord( $country_code[0] ) ) . ';', 'UTF-8', 'HTML-ENTITIES');
-    $flag .= mb_convert_encoding( '&#' . ( 127397 + ord( $country_code[1] ) ) . ';', 'UTF-8', 'HTML-ENTITIES');
+    $flag = mb_convert_encoding(
+        "&#" . (127397 + ord($country_code[0])) . ";",
+        "UTF-8",
+        "HTML-ENTITIES"
+    );
+    $flag .= mb_convert_encoding(
+        "&#" . (127397 + ord($country_code[1])) . ";",
+        "UTF-8",
+        "HTML-ENTITIES"
+    );
     return $flag;
 }
 
@@ -336,20 +344,20 @@ function getCountryCode($flag)
     if (!preg_match('/^&#\d{1,};&#\d{1,};$/', $flag)) {
         return false;
     }
-    
-    $flag = str_replace(array('&#', ';'), '', $flag);
+
+    $flag = str_replace(["&#", ";"], "", $flag);
     $code1 = chr(intval($flag) - 127397);
     $code2 = chr(intval(substr($flag, -5)) - 127397);
     return $code1 . $code2;
 }
 
-function get_ip($config,$type)
+function get_ip($config, $type)
 {
     switch ($type) {
         case "vmess":
             return get_vmess_ip($config);
         case "vless":
-            $is_reality = (stripos($config, "reality") !== false) ? true : false;
+            $is_reality = stripos($config, "reality") !== false ? true : false;
             return get_vless_ip($config, $is_reality);
         case "trojan":
             return get_trojan_ip($config);
@@ -426,23 +434,44 @@ function ping($ip, $port)
     }
 }
 
-function generate_name($flag, ip, $port, $ping)
+function generate_name($flag, $ip, $port, $ping)
 {
-    $is_reality = (stripos($config, "reality") !== false) ? true : false;
-    $country_code = (getCountryCode($flag) !== flase) ? getCountryCode($flag) : "RELAY"
+    $is_reality = stripos($config, "reality") !== false ? true : false;
+    $country_code =
+        getCountryCode($flag) !== flase ? getCountryCode($flag) : "RELAY";
     $name = "";
     switch ($is_reality) {
         case true:
-            $name = "REALITY|" . $country_code . $flag . " | " . $ip . "-" . $port . " | " . $ping . "ms";
+            $name =
+                "REALITY|" .
+                $country_code .
+                $flag .
+                " | " .
+                $ip .
+                "-" .
+                $port .
+                " | " .
+                $ping .
+                "ms";
             break;
         case false:
-            $name = $country_code . $flag . " | " . $ip . "-" . $port . " | " . $ping . "ms";
+            $name =
+                $country_code .
+                $flag .
+                " | " .
+                $ip .
+                "-" .
+                $port .
+                " | " .
+                $ping .
+                "ms";
             break;
     }
     return $name;
 }
 
-function process_config ($config) {
+function process_config($config)
+{
     $name_array = [
         "vmess" => "ps",
         "vless" => "hash",
@@ -453,7 +482,7 @@ function process_config ($config) {
     $parsed_config = parse_config($config);
     $ip = get_ip($parsed_config, $type);
     $port = get_port($parsed_config, $type);
-    $ping_data = ping($ip, $port)
+    $ping_data = ping($ip, $port);
     if ($ping_data !== "unavailable") {
         $flag = get_flag($ip);
         $name_key = $name_array[$type];
@@ -510,7 +539,7 @@ function process_subscriptions_helper($input)
     $data_array = explode("\n", $input);
     foreach ($data_array as $config) {
         $processed_config = process_config($config);
-        if ($processed_config !== false){
+        if ($processed_config !== false) {
             $type = detect_type($config);
             switch ($type) {
                 case "vmess":
