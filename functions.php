@@ -583,7 +583,7 @@ function split_by_protocol($input){
     $output = [];
     $configs_array = explode("\n", $input);
     foreach ($configs_array as $config) {
-        $type = detect_type($config)
+        $type = detect_type($config);
             switch ($type){
                 case "vmess" :
                     $output['vmess'][] = $config;
