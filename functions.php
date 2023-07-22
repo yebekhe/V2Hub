@@ -478,7 +478,7 @@ function process_config($config)
         "vmess" => "ps",
         "vless" => "hash",
         "trojan" => "hash",
-        "ss" => "remarks",
+        "ss" => "name",
     ];
     $type = detect_type($config);
     $is_reality = stripos($config, "reality") !== false ? true : false;
