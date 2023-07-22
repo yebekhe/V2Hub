@@ -587,16 +587,12 @@ function split_by_protocol($input){
             switch ($type){
                 case "vmess" :
                     $output['vmess'][] = $config;
-                    break;
                 case "vmess" :
                     $output['vless'][] = $config;
-                    break;
                 case "vmess" :
                     $output['trojan'][] = $config;
-                    break;
                 case "vmess" :
                     $output['ss'][] = $config;
-                    break;
             }
     }
     return $output;
