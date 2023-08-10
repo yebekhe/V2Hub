@@ -1,2 +1,2 @@
-trojan://598c19f3-a48e-47cd-8451-1ba04ea094d0@51.91.11.29:80?security=tls&headerType=none&type=tcp&sni=speedtest.net#US🇺🇸 | speedtest.net-80 | 5.72ms
-trojan://ee2bccd3-0f30-42d4-86d6-3d393ad230bd@135.148.148.4:80?security=tls&headerType=none&type=tcp&sni=us3.trojanvh.xyz#US🇺🇸 | us3.trojanvh.xyz-80 | 86.98ms
+trojan://598c19f3-a48e-47cd-8451-1ba04ea094d0@51.91.11.29:80?security=tls&headerType=none&type=tcp&sni=speedtest.net#US🇺🇸 | speedtest.net-80 | 1.24ms
+trojan://ee2bccd3-0f30-42d4-86d6-3d393ad230bd@135.148.148.4:80?security=tls&headerType=none&type=tcp&sni=us3.trojanvh.xyz#RELAY🚩 | us3.trojanvh.xyz-80 | 12.04ms
